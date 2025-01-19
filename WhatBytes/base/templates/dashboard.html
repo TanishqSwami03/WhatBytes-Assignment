@@ -1,1 +1,18 @@
-<h1>This is the dashboard page !</h1>
+{% extends 'base_temp.html' %}
+
+{% block content %}
+  <div class="card shadow-lg" style="max-width: 400px; width: 100%;">
+    <div class="card-header text-center bg-primary text-white">
+      <h3>Welcome to your Dashboard</h3>
+    </div>
+    <div class="card-body">
+      <h4>Hi, {{ user.username }} !</h4>
+      
+      <div class="text-center mt-4">
+        <a href="{% url 'profile' %}" class="btn btn-info btn-block mb-2">Profile</a>
+        <a href="{% url 'change-password' %}" class="btn btn-warning btn-block mb-2">Change Password</a>
+        <a href="{% url 'logout-user' %}" class="btn btn-danger btn-block mb-2">Logout</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
