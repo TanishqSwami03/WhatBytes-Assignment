@@ -17,7 +17,8 @@ def signup(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')
+            messages.success(request, "Account Created !")
+            return redirect('login-user')
     else:
         form = CustomUserCreationForm()
 
@@ -102,15 +103,15 @@ def reset_password(request, user_id, token):
         messages.error(request, 'User does not exist.')
         return redirect('forgot_password')
 
-
-
 @login_required
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(user=request.user, data=request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
             update_session_auth_hash(request, form.user)
+            user.last_updated = now()
+            user.save()
             messages.success(request, "Your password has been successfully changed.")
             return redirect('change-password')
         else:
